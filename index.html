@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ольга Чевела | Русский язык как иностранный</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 30%, #80deea 60%, #4dd0e1 100%);
+            color: #004d40;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(255,255,255,0.5);
+            background: linear-gradient(45deg, #00897b, #00acc1, #26a69a, #4db6ac);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            color: #004d40;
+            text-shadow: 0 1px 3px rgba(255,255,255,0.8);
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 60px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,137,123,0.2);
+            border: 2px solid rgba(0,137,123,0.2);
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-image {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #b2dfdb, #80cbc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            box-shadow: 0 10px 30px rgba(0,137,123,0.3);
+            border: 4px solid white;
+            overflow: hidden;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .hero-image-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            color: #00897b;
+            font-size: 4rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #00897b;
+            text-shadow: 0 2px 3px rgba(255,255,255,0.8);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            color: #004d40;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #00897b, #00796b);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 137, 123, 0.4);
+            border: 2px solid #00897b;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 137, 123, 0.6);
+            background: linear-gradient(45deg, #00796b, #00695c);
+        }
+
+        .services {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0,137,123,0.15);
+            border: 2px solid rgba(0,137,123,0.1);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            color: #00897b;
+            text-shadow: 0 2px 3px rgba(255,255,255,0.8);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,137,123,0.1);
+            border-top: 4px solid #00897b;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #004d40;
+        }
+
+        .service-card p {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #37474f;
+        }
+
+        .testimonials {
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .testimonial {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 600px;
+            font-style: italic;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            box-shadow: 0 5px 15px rgba(0,137,123,0.15);
+            border-left: 4px solid #00897b;
+        }
+
+        .testimonial-author {
+            margin-top: 15px;
+            font-weight: 600;
+            color: #00897b;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            margin-top: 40px;
+            box-shadow: 0 5px 15px rgba(0,137,123,0.15);
+            border: 2px solid rgba(0,137,123,0.1);
+        }
+
+        .russian-flag {
+            display: inline-block;
+            width: 30px;
+            height: 20px;
+            background: linear-gradient(to bottom, white 33%, #00897b 33%, #00897b 66%, #004d40 66%);
+            border-radius: 3px;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-content {
+                text-align: center;
+            }
+            
+            .hero-image {
+                margin-bottom: 30px;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="bgCanvas"></canvas>
+    
+    <div class="container">
+        <header>
+            <h1 class="logo">Русский с Ольгой</h1>
+            <p class="tagline">Научись говорить по-русски легко и с удовольствием!</p>
+        </header>
+
+        <div class="hero">
+            <div class="hero-content">
+                <h2>Привет! Я Ольга Чевела</h2>
+                <p>Сертифицированный преподаватель русского языка как иностранного с 30-летним стажем. Помогаю иностранцам освоить русский язык — от начального уровня до продвинутого владения, включая подготовку к ТРКИ (Тест по русскому языку как иностранному).</p>
+                <p>Мои занятия — это живое общение, погружение в русскую культуру, литературу и традиции. Учимся говорить, читать и писать на русском в дружелюбной и поддерживающей атмосфере!</p>
+                <a href="#contact" class="btn">Записаться на пробный урок</a>
+            </div>
+            <div class="hero-image">
+                <!-- Замените 'your-photo.jpg' на имя вашего файла фотографии -->
+                <img src="your-photo.jpg" alt="Оьга Чевелва - преподаватель русского языка">
+                <div class="hero-image-placeholder" style="display: none;">
+                    📸
+                </div>
+            </div>
+        </div>
+
+        <div class="services">
+            <h2 class="section-title">Мои программы</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>🌍 Начинающим</h3>
+                    <p>Азбука, основы грамматики, первые разговорные фразы, знакомство с культурой</p>
+                </div>
+                <div class="service-card">
+                    <h3>📚 Средний уровень</h3>
+                    <p>Расширение словарного запаса, сложная грамматика, чтение адаптированной литературы</p>
+                </div>
+                <div class="service-card">
+                    <h3>🎓 Продвинутый уровень</h3>
+                    <p>Идиомы, пословицы, классическая литература, подготовка к ТРКИ, деловой русский</p>
+                </div>
+                <div class="service-card">
+                    <h3>💼 Для бизнеса</h3>
+                    <p>Деловая переписка, презентации, переговоры, специализированная лексика</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonials">
+            <h2 class="section-title">Отзывы студентов</h2>
+            <div class="testimonial">
+                "За год с Ольгой я прошел путь от полного нуля до уверенного общения на русском! Ее уроки — это всегда интересно и эффективно."
+                <div class="testimonial-author">— Нишкант из Индии</div>
+            </div>
+            <div class="testimonial">
+                "Благодаря Ольге я сдал ТРКИ на уровень В2 и получил российскую визу. Она настоящий профессионал своего дела!"
+                <div class="testimonial-author">— Мохаммад из Марокко</div>
+            </div>
+        </div>
+
+        <footer id="contact">
+            <p><span class="russian-flag"></span> +7 (986) 888-77-66 | ✉️ olga.russian@email.com</p>
+            <p>📍 Казань и онлайн занятия по всему миру</p>
+            <p>🕐 Индивидуальные и групповые занятия</p>
+        </footer>
+    </div>
+
+    <script>
+        // Проверка загрузки изображения и отображение placeholder при ошибке
+        document.addEventListener('DOMContentLoaded', function() {
+            const img = document.querySelector('.hero-image img');
+            const placeholder = document.querySelector('.hero-image-placeholder');
+            
+            img.onerror = function() {
+                this.style.display = 'none';
+                placeholder.style.display = 'flex';
+            };
+        });
+
+        // Canvas background animation with turquoise theme
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        
+        // Animated elements with turquoise colors
+        const elements = [];
+        const elementCount = 40;
+        
+        class AnimatedElement {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 15 + 8;
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.015;
+                this.type = Math.random() > 0.5 ? 'wave' : 'bubble';
+                // Turquoise color palette
+                const colors = ['#00897b', '#00acc1', '#26a69a', '#4db6ac', '#80cbc4', '#b2dfdb'];
+                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.alpha = Math.random() * 0.3 + 0.1;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.rotation += this.rotationSpeed;
+                
+                if (this.x > canvas.width + 30) this.x = -30;
+                if (this.x < -30) this.x = canvas.width + 30;
+                if (this.y > canvas.height + 30) this.y = -30;
+                if (this.y < -30) this.y = canvas.height + 30;
+            }
+            
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                
+                if (this.type === 'wave') {
+                    // Wave-like pattern
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    for (let i = 0; i < 5; i++) {
+                        const angle = (i / 5) * Math.PI * 2;
+                        const radius = this.size * (0.8 + Math.sin(Date.now() * 0.001 + i) * 0.2);
+                        const x = Math.cos(angle) * radius;
+                        const y = Math.sin(angle) * radius;
+                        if (i === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    ctx.closePath();
+                    ctx.fill();
+                } else {
+                    // Bubble-like circle
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size/2, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Inner highlight
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+                    ctx.beginPath();
+                    ctx.arc(-this.size/6, -this.size/6, this.size/6, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                
+                ctx.restore();
+            }
+        }
+        
+        // Create animated elements
+        for (let i = 0; i < elementCount; i++) {
+            elements.push(new AnimatedElement());
+        }
+        
+        // Draw subtle wave pattern in background
+        function drawBackgroundPattern() {
+            const patternSize = 80;
+            ctx.strokeStyle = 'rgba(0, 137, 123, 0.05)';
+            ctx.lineWidth = 2;
+            
+            for (let x = 0; x < canvas.width; x += patternSize) {
+                for (let y = 0; y < canvas.height; y += patternSize) {
+                    ctx.beginPath();
+                    ctx.arc(x + patternSize/2, y + patternSize/2, 15, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+            }
+        }
+        
+        // Animation loop
+        function animate() {
+            // Clear with semi-transparent overlay for smooth animation
+            ctx.fillStyle = 'rgba(224, 247, 250, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            drawBackgroundPattern();
+            
+            // Update and draw animated elements
+            elements.forEach(element => {
+                element.update();
+                element.draw();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+    </script>
+</body>
+</html>
+
