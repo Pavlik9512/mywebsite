@@ -17,6 +17,45 @@
             color: #004d40;
             min-height: 100vh;
             overflow-x: hidden;
+            padding-top: 80px; /* Компенсация под фиксированную навигацию */
+        }
+
+        /* Фиксированная навигация */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,137,123,0.2);
+            border-bottom: 1px solid rgba(0,137,123,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #00897b;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .nav-link:hover {
+            background: #e0f7fa;
+            color: #004d40;
         }
 
         canvas {
@@ -215,77 +254,112 @@
             color: #00897b;
         }
 
+        .contacts-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 60px 0;
+            box-shadow: 0 10px 30px rgba(0,137,123,0.15);
+            border: 2px solid rgba(0,137,123,0.1);
+            text-align: center;
+        }
+
+        .contact-info p {
+            font-size: 1.2rem;
+            margin: 12px 0;
+            color: #004d40;
+        }
+
+        .contact-link {
+            color: #00897b;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .contact-link:hover {
+            color: #00695c;
+            text-decoration: underline;
+        }
+
         footer {
             text-align: center;
-            padding: 40px 0;
-            font-size: 1.1rem;
+            padding: 30px 0;
+            font-size: 1rem;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             margin-top: 40px;
             box-shadow: 0 5px 15px rgba(0,137,123,0.15);
             border: 2px solid rgba(0,137,123,0.1);
-        }
-
-        .russian-flag {
-            display: inline-block;
-            width: 30px;
-            height: 20px;
-            background: linear-gradient(to bottom, white 33%, #00897b 33%, #00897b 66%, #004d40 66%);
-            border-radius: 3px;
-            margin-right: 10px;
-            vertical-align: middle;
+            color: #004d40;
         }
 
         @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+            .nav-container {
+                flex-wrap: wrap;
+                gap: 10px;
+                padding: 0 10px;
+            }
             .hero {
                 flex-direction: column;
                 text-align: center;
             }
-            
             .hero-content {
                 text-align: center;
             }
-            
             .hero-image {
                 margin-bottom: 30px;
             }
-            
             .logo {
                 font-size: 2.5rem;
             }
-            
             .tagline {
                 font-size: 1.4rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
             }
         }
     </style>
 </head>
 <body>
+    <nav>
+        <div class="nav-container">
+            <a href="#home" class="nav-link">Главная</a>
+            <a href="#about" class="nav-link">Обо мне</a>
+            <a href="#programs" class="nav-link">Программы</a>
+            <a href="https://pavlik9512.github.io/My_games/" target="_blank" class="nav-link">Товары</a>
+            <a href="#reviews" class="nav-link">Отзывы</a>
+            <a href="#contacts" class="nav-link">Контакты</a>
+        </div>
+    </nav>
+
     <canvas id="bgCanvas"></canvas>
     
     <div class="container">
-        <header>
+        <header id="home">
             <h1 class="logo">Русский с Ольгой</h1>
             <p class="tagline">Научись говорить по-русски легко и с удовольствием!</p>
         </header>
 
-        <div class="hero">
+        <div id="about" class="hero">
             <div class="hero-content">
                 <h2>Привет! Я Ольга Чевела</h2>
                 <p>Сертифицированный преподаватель русского языка как иностранного с 30-летним стажем. Помогаю иностранцам освоить русский язык — от начального уровня до продвинутого владения, включая подготовку к ТРКИ (Тест по русскому языку как иностранному).</p>
                 <p>Мои занятия — это живое общение, погружение в русскую культуру, литературу и традиции. Учимся говорить, читать и писать на русском в дружелюбной и поддерживающей атмосфере!</p>
-                <a href="#contact" class="btn">Записаться на пробный урок</a>
+                <a href="#contacts" class="btn">Записаться на пробный урок</a>
             </div>
             <div class="hero-image">
-                <!-- Замените 'your-photo.jpg' на имя вашего файла фотографии -->
-                <img src="your-photo.jpg" alt="Оьга Чевелва - преподаватель русского языка">
-                <div class="hero-image-placeholder" style="display: none;">
-                    📸
-                </div>
+                <img src="your-photo.jpg" alt="Ольга Чевела — преподаватель русского языка">
+                <div class="hero-image-placeholder" style="display: none;">📸</div>
             </div>
         </div>
 
-        <div class="services">
+        <div id="programs" class="services">
             <h2 class="section-title">Мои программы</h2>
             <div class="services-grid">
                 <div class="service-card">
@@ -307,7 +381,7 @@
             </div>
         </div>
 
-        <div class="testimonials">
+        <div id="reviews" class="testimonials">
             <h2 class="section-title">Отзывы студентов</h2>
             <div class="testimonial">
                 "За год с Ольгой я прошел путь от полного нуля до уверенного общения на русском! Ее уроки — это всегда интересно и эффективно."
@@ -319,10 +393,20 @@
             </div>
         </div>
 
-        <footer id="contact">
-            <p><span class="russian-flag"></span> +7 (986) 888-77-66 | ✉️ olga.russian@email.com</p>
-            <p>📍 Казань и онлайн занятия по всему миру</p>
-            <p>🕐 Индивидуальные и групповые занятия</p>
+        <div id="contacts" class="contacts-section">
+            <h2 class="section-title">Свяжитесь со мной</h2>
+            <div class="contact-info">
+                <p><strong>📞 Телефон:</strong> <a href="tel:+79868887766" class="contact-link">+7 (986) 888-77-66</a></p>
+                <p><strong>✉️ Email:</strong> <a href="mailto:olga.russian@email.com" class="contact-link">olga.russian@email.com</a></p>
+                <p><strong>📍 Локация:</strong> Казань (онлайн — по всему миру)</p>
+                <p><strong>🕗 Форматы занятий:</strong> Индивидуальные и групповые (онлайн)</p>
+                <p><strong>🎯 Подготовка:</strong> В том числе к ТРКИ</p>
+                <a href="mailto:olga.russian@email.com" class="btn" style="margin-top: 20px;">Написать сейчас</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 Ольга Чевела. Русский язык как иностранный.</p>
         </footer>
     </div>
 
@@ -342,7 +426,6 @@
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         
-        // Set canvas size
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
@@ -351,7 +434,6 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
         
-        // Animated elements with turquoise colors
         const elements = [];
         const elementCount = 40;
         
@@ -365,7 +447,6 @@
                 this.rotation = Math.random() * Math.PI * 2;
                 this.rotationSpeed = (Math.random() - 0.5) * 0.015;
                 this.type = Math.random() > 0.5 ? 'wave' : 'bubble';
-                // Turquoise color palette
                 const colors = ['#00897b', '#00acc1', '#26a69a', '#4db6ac', '#80cbc4', '#b2dfdb'];
                 this.color = colors[Math.floor(Math.random() * colors.length)];
                 this.alpha = Math.random() * 0.3 + 0.1;
@@ -389,7 +470,6 @@
                 ctx.rotate(this.rotation);
                 
                 if (this.type === 'wave') {
-                    // Wave-like pattern
                     ctx.fillStyle = this.color;
                     ctx.beginPath();
                     for (let i = 0; i < 5; i++) {
@@ -403,12 +483,10 @@
                     ctx.closePath();
                     ctx.fill();
                 } else {
-                    // Bubble-like circle
                     ctx.fillStyle = this.color;
                     ctx.beginPath();
                     ctx.arc(0, 0, this.size/2, 0, Math.PI * 2);
                     ctx.fill();
-                    // Inner highlight
                     ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
                     ctx.beginPath();
                     ctx.arc(-this.size/6, -this.size/6, this.size/6, 0, Math.PI * 2);
@@ -419,12 +497,10 @@
             }
         }
         
-        // Create animated elements
         for (let i = 0; i < elementCount; i++) {
             elements.push(new AnimatedElement());
         }
         
-        // Draw subtle wave pattern in background
         function drawBackgroundPattern() {
             const patternSize = 80;
             ctx.strokeStyle = 'rgba(0, 137, 123, 0.05)';
@@ -439,15 +515,12 @@
             }
         }
         
-        // Animation loop
         function animate() {
-            // Clear with semi-transparent overlay for smooth animation
             ctx.fillStyle = 'rgba(224, 247, 250, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
             drawBackgroundPattern();
             
-            // Update and draw animated elements
             elements.forEach(element => {
                 element.update();
                 element.draw();
@@ -457,7 +530,25 @@
         }
         
         animate();
+
+        // Плавная прокрутка к якорям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const target = document.querySelector(targetId);
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 90,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
+
 
