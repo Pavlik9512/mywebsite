@@ -17,10 +17,9 @@
             color: #004d40;
             min-height: 100vh;
             overflow-x: hidden;
-            padding-top: 80px; /* Компенсация под фиксированную навигацию */
+            padding-top: 80px;
         }
 
-        /* Фиксированная навигация */
         nav {
             position: fixed;
             top: 0;
@@ -295,6 +294,211 @@
             color: #004d40;
         }
 
+        /* Fortune Wheel Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #b2ebf2, #80deea, #4dd0e1);
+            border-radius: 25px;
+            padding: 30px;
+            max-width: 900px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #004d40;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+            text-shadow: 0 0 8px rgba(255,255,255,0.8);
+        }
+
+        .close-modal:hover {
+            color: #ff6b6b;
+        }
+
+        .wheel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        @media (min-width: 768px) {
+            .wheel-container {
+                flex-direction: row;
+                justify-content: center;
+                gap: 50px;
+            }
+        }
+
+        .wheel-wrapper {
+            position: relative;
+            width: 320px;
+            height: 320px;
+        }
+
+        #fortuneWheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                #ff80ab 0deg, #ff80ab 72deg,
+                #80dfff 72deg, #80dfff 144deg,
+                #d8b4fe 144deg, #d8b4fe 216deg,
+                #a8f0d0 216deg, #a8f0d0 288deg,
+                #40e0d0 288deg, #40e0d0 360deg
+            );
+            box-shadow: 
+                0 0 35px rgba(77, 208, 225, 0.8),
+                inset 0 0 25px rgba(255, 255, 255, 0.5);
+            transition: transform 4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border: 4px solid white;
+        }
+
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 20px rgba(77, 208, 225, 0.9);
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            right: -60px;
+            transform: translateY(-50%);
+            z-index: 10;
+        }
+
+        .arrow::before {
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-top: 40px solid #00897b;
+            filter: drop-shadow(0 0 8px rgba(77, 208, 225, 0.8));
+        }
+
+        .arrow::after {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            background: #00897b;
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(77, 208, 225, 0.9);
+        }
+
+        .result-display {
+            background: rgba(255, 255, 255, 0.92);
+            padding: 25px;
+            border-radius: 18px;
+            min-height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #00897b;
+            box-shadow: 0 5px 15px rgba(0,137,123,0.2);
+            border: 2px solid rgba(77, 208, 225, 0.4);
+        }
+
+        .spin-btn {
+            background: linear-gradient(45deg, #4dd0e1, #ff80ab);
+            color: white;
+            border: none;
+            padding: 16px 45px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: all 0.3s;
+            box-shadow: 
+                0 6px 20px rgba(77, 208, 225, 0.6),
+                0 0 25px rgba(255, 128, 171, 0.5);
+            font-family: inherit;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+
+        .spin-btn:hover:not(:disabled) {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 
+                0 10px 25px rgba(77, 208, 225, 0.8),
+                0 0 35px rgba(255, 128, 171, 0.7);
+        }
+
+        .spin-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 4px 12px rgba(77, 208, 225, 0.4);
+        }
+
+        .wheel-title {
+            color: #004d40;
+            font-size: 2.4rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 6px rgba(255,255,255,0.7);
+            font-weight: 800;
+        }
+
+        .wheel-instructions {
+            color: #00695c;
+            font-size: 1.15rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+
+        .used-message {
+            font-size: 1.4rem;
+            color: #d32f2f;
+            font-weight: bold;
+            padding: 20px;
+            background: rgba(255, 240, 240, 0.9);
+            border-radius: 15px;
+            margin-top: 20px;
+            border: 2px solid #ffcdd2;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding-top: 70px;
@@ -308,20 +512,9 @@
                 flex-direction: column;
                 text-align: center;
             }
-            .hero-content {
-                text-align: center;
-            }
-            .hero-image {
-                margin-bottom: 30px;
-            }
-            .logo {
-                font-size: 2.5rem;
-            }
-            .tagline {
-                font-size: 1.4rem;
-            }
-            .section-title {
-                font-size: 1.8rem;
+            .wheel-wrapper {
+                width: 280px;
+                height: 280px;
             }
         }
     </style>
@@ -335,6 +528,7 @@
             <a href="https://pavlik9512.github.io/My_games/" target="_blank" class="nav-link">Товары</a>
             <a href="#reviews" class="nav-link">Отзывы</a>
             <a href="#contacts" class="nav-link">Контакты</a>
+            <a href="#" id="fortuneBtn" class="nav-link">Испытай удачу!</a>
         </div>
     </nav>
 
@@ -410,8 +604,27 @@
         </footer>
     </div>
 
+    <!-- Fortune Wheel Modal -->
+    <div id="fortuneModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="wheel-title">Колесо Фортуны</h2>
+            
+            <div class="wheel-container">
+                <div class="wheel-wrapper">
+                    <div id="fortuneWheel"></div>
+                    <div class="wheel-center"></div>
+                    <div class="arrow"></div>
+                </div>
+                
+                <div id="wheelInterface">
+                    <!-- Сюда будет подставляться либо кнопка, либо сообщение -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Проверка загрузки изображения и отображение placeholder при ошибке
         document.addEventListener('DOMContentLoaded', function() {
             const img = document.querySelector('.hero-image img');
             const placeholder = document.querySelector('.hero-image-placeholder');
@@ -420,135 +633,219 @@
                 this.style.display = 'none';
                 placeholder.style.display = 'flex';
             };
-        });
 
-        // Canvas background animation with turquoise theme
-        const canvas = document.getElementById('bgCanvas');
-        const ctx = canvas.getContext('2d');
-        
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-        
-        const elements = [];
-        const elementCount = 40;
-        
-        class AnimatedElement {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 15 + 8;
-                this.speedX = (Math.random() - 0.5) * 0.4;
-                this.speedY = (Math.random() - 0.5) * 0.4;
-                this.rotation = Math.random() * Math.PI * 2;
-                this.rotationSpeed = (Math.random() - 0.5) * 0.015;
-                this.type = Math.random() > 0.5 ? 'wave' : 'bubble';
-                const colors = ['#00897b', '#00acc1', '#26a69a', '#4db6ac', '#80cbc4', '#b2dfdb'];
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.alpha = Math.random() * 0.3 + 0.1;
-            }
+            // === FORTUNE WHEEL — С НОВОЙ ЛОГИКОЙ ===
+            const fortuneBtn = document.getElementById('fortuneBtn');
+            const fortuneModal = document.getElementById('fortuneModal');
+            const closeModal = document.querySelector('.close-modal');
+            const wheelInterface = document.getElementById('wheelInterface');
+            const fortuneWheel = document.getElementById('fortuneWheel');
             
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                this.rotation += this.rotationSpeed;
-                
-                if (this.x > canvas.width + 30) this.x = -30;
-                if (this.x < -30) this.x = canvas.width + 30;
-                if (this.y > canvas.height + 30) this.y = -30;
-                if (this.y < -30) this.y = canvas.height + 30;
-            }
+            const usedFortune = localStorage.getItem('usedFortune') === 'true';
             
-            draw() {
-                ctx.save();
-                ctx.globalAlpha = this.alpha;
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.rotation);
-                
-                if (this.type === 'wave') {
-                    ctx.fillStyle = this.color;
-                    ctx.beginPath();
-                    for (let i = 0; i < 5; i++) {
-                        const angle = (i / 5) * Math.PI * 2;
-                        const radius = this.size * (0.8 + Math.sin(Date.now() * 0.001 + i) * 0.2);
-                        const x = Math.cos(angle) * radius;
-                        const y = Math.sin(angle) * radius;
-                        if (i === 0) ctx.moveTo(x, y);
-                        else ctx.lineTo(x, y);
-                    }
-                    ctx.closePath();
-                    ctx.fill();
+            // Функция обновления интерфейса колеса
+            function updateWheelInterface() {
+                if (usedFortune) {
+                    wheelInterface.innerHTML = `
+                        <div class="result-display">
+                            Колесо уже использовано!
+                        </div>
+                        <div class="used-message">
+                            Спасибо, что участвуете! Приз уже получен 🎁
+                        </div>
+                    `;
                 } else {
-                    ctx.fillStyle = this.color;
-                    ctx.beginPath();
-                    ctx.arc(0, 0, this.size/2, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-                    ctx.beginPath();
-                    ctx.arc(-this.size/6, -this.size/6, this.size/6, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                
-                ctx.restore();
-            }
-        }
-        
-        for (let i = 0; i < elementCount; i++) {
-            elements.push(new AnimatedElement());
-        }
-        
-        function drawBackgroundPattern() {
-            const patternSize = 80;
-            ctx.strokeStyle = 'rgba(0, 137, 123, 0.05)';
-            ctx.lineWidth = 2;
-            
-            for (let x = 0; x < canvas.width; x += patternSize) {
-                for (let y = 0; y < canvas.height; y += patternSize) {
-                    ctx.beginPath();
-                    ctx.arc(x + patternSize/2, y + patternSize/2, 15, 0, Math.PI * 2);
-                    ctx.stroke();
+                    wheelInterface.innerHTML = `
+                        <div class="result-display" id="resultDisplay">
+                            Нажмите "Крутить", чтобы начать!
+                        </div>
+                        <button id="spinBtn" class="spin-btn">Крутить колесо! 🎰</button>
+                    `;
+                    
+                    // Назначаем обработчик только если колесо ещё не использовано
+                    document.getElementById('spinBtn').addEventListener('click', spinWheel);
                 }
             }
-        }
-        
-        function animate() {
-            ctx.fillStyle = 'rgba(224, 247, 250, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            drawBackgroundPattern();
-            
-            elements.forEach(element => {
-                element.update();
-                element.draw();
-            });
-            
-            requestAnimationFrame(animate);
-        }
-        
-        animate();
 
-        // Плавная прокрутка к якорям
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            fortuneBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const target = document.querySelector(targetId);
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 90,
-                        behavior: 'smooth'
-                    });
+                fortuneModal.style.display = 'flex';
+                updateWheelInterface();
+            });
+
+            closeModal.addEventListener('click', function() {
+                fortuneModal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function(e) {
+                if (e.target === fortuneModal) {
+                    fortuneModal.style.display = 'none';
                 }
+            });
+
+            const prizes = [
+                "Скидка на первый месяц 10%",
+                "Бесплатный урок",
+                "Рабочий лист",
+                "Скидка на курс 10%",
+                "Игра в подарок"
+            ];
+
+            let isSpinning = false;
+            let currentRotation = 0;
+
+            function spinWheel() {
+                if (isSpinning || usedFortune) return;
+                
+                isSpinning = true;
+                const spinBtn = document.getElementById('spinBtn');
+                const resultDisplay = document.getElementById('resultDisplay');
+                spinBtn.disabled = true;
+                resultDisplay.textContent = "Крутится...";
+                
+                const extraRotations = Math.floor(Math.random() * 5) + 5;
+                const segmentAngle = 360 / prizes.length;
+                const randomSegment = Math.floor(Math.random() * prizes.length);
+                const randomOffset = Math.random() * (segmentAngle - 10) + 5;
+                const targetRotation = currentRotation + extraRotations * 360 + randomSegment * segmentAngle + randomOffset;
+                
+                fortuneWheel.style.transform = `rotate(${targetRotation}deg)`;
+                currentRotation = targetRotation;
+                
+                setTimeout(() => {
+                    const normalizedRotation = targetRotation % 360;
+                    const segmentIndex = Math.floor((360 - normalizedRotation + segmentAngle/2) % 360 / segmentAngle) % prizes.length;
+                    resultDisplay.textContent = prizes[segmentIndex];
+                    isSpinning = false;
+                    
+                    // Сохраняем факт использования
+                    localStorage.setItem('usedFortune', 'true');
+                }, 4000);
+            }
+            
+            // === Canvas background ===
+            const canvas = document.getElementById('bgCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            
+            const elements = [];
+            const elementCount = 40;
+            
+            class AnimatedElement {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 15 + 8;
+                    this.speedX = (Math.random() - 0.5) * 0.4;
+                    this.speedY = (Math.random() - 0.5) * 0.4;
+                    this.rotation = Math.random() * Math.PI * 2;
+                    this.rotationSpeed = (Math.random() - 0.5) * 0.015;
+                    this.type = Math.random() > 0.5 ? 'wave' : 'bubble';
+                    const colors = ['#00897b', '#00acc1', '#26a69a', '#4db6ac', '#80cbc4', '#b2dfdb'];
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                    this.alpha = Math.random() * 0.3 + 0.1;
+                }
+                
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.rotation += this.rotationSpeed;
+                    
+                    if (this.x > canvas.width + 30) this.x = -30;
+                    if (this.x < -30) this.x = canvas.width + 30;
+                    if (this.y > canvas.height + 30) this.y = -30;
+                    if (this.y < -30) this.y = canvas.height + 30;
+                }
+                
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.alpha;
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation);
+                    
+                    if (this.type === 'wave') {
+                        ctx.fillStyle = this.color;
+                        ctx.beginPath();
+                        for (let i = 0; i < 5; i++) {
+                            const angle = (i / 5) * Math.PI * 2;
+                            const radius = this.size * (0.8 + Math.sin(Date.now() * 0.001 + i) * 0.2);
+                            const x = Math.cos(angle) * radius;
+                            const y = Math.sin(angle) * radius;
+                            if (i === 0) ctx.moveTo(x, y);
+                            else ctx.lineTo(x, y);
+                        }
+                        ctx.closePath();
+                        ctx.fill();
+                    } else {
+                        ctx.fillStyle = this.color;
+                        ctx.beginPath();
+                        ctx.arc(0, 0, this.size/2, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+                        ctx.beginPath();
+                        ctx.arc(-this.size/6, -this.size/6, this.size/6, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    
+                    ctx.restore();
+                }
+            }
+            
+            for (let i = 0; i < elementCount; i++) {
+                elements.push(new AnimatedElement());
+            }
+            
+            function drawBackgroundPattern() {
+                const patternSize = 80;
+                ctx.strokeStyle = 'rgba(0, 137, 123, 0.05)';
+                ctx.lineWidth = 2;
+                
+                for (let x = 0; x < canvas.width; x += patternSize) {
+                    for (let y = 0; y < canvas.height; y += patternSize) {
+                        ctx.beginPath();
+                        ctx.arc(x + patternSize/2, y + patternSize/2, 15, 0, Math.PI * 2);
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            function animate() {
+                ctx.fillStyle = 'rgba(224, 247, 250, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                drawBackgroundPattern();
+                elements.forEach(element => {
+                    element.update();
+                    element.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+
+            // Smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 90,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
             });
         });
     </script>
 </body>
 </html>
-
 
